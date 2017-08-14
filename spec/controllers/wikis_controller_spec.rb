@@ -142,6 +142,127 @@ RSpec.describe WikisController, type: :controller do
                 end
               end
 
+context "premium able to update" do
+
+
+describe "GET edit" do
+     it "returns http success" do
+       sign_in my_user
+       my_user.role = :premium
+       get :edit, {id: wiki.id}
+       expect(response).to have_http_status(:success)
+     end
+
+     it "renders the #edit view" do
+       sign_in my_user
+       my_user.role = :premium
+       get :edit, {id: wiki.id}
+       expect(response).to render_template :edit
+     end
+
+     it "assigns wiki to be updated to @wiki" do
+       sign_in my_user
+       my_user.role = :premium
+       get :edit, {id: wiki.id}
+
+       wiki_instance = assigns(:wiki)
+
+       expect(wiki_instance.id).to eq wiki.id
+       expect(wiki_instance.title).to eq wiki.title
+       expect(wiki_instance.body).to eq wiki.body
+     end
+   end
+
+   describe "PUT update" do
+        it "updates wiki with expected attributes" do
+          sign_in my_user
+          my_user.role = :premium
+          new_title = RandomData.random_sentence
+          new_body = RandomData.random_paragraph
+
+          put :update, id: wiki.id, wiki: {title: new_title, body: new_body}
+
+          updated_wiki = assigns(:wiki)
+          expect(updated_wiki.id).to eq wiki.id
+          expect(updated_wiki.title).to eq new_title
+          expect(updated_wiki.body).to eq new_body
+        end
+
+        it "redirects to the updated wiki" do
+          sign_in my_user
+          my_user.role = :premium
+          new_title = RandomData.random_sentence
+          new_body = RandomData.random_paragraph
+
+          put :update, id: wiki.id, wiki: {title: new_title, body: new_body}
+          expect(response).to redirect_to wiki
+        end
+      end
+
+
+
+
+end
+
+context "admin able to update" do
+
+  describe "GET edit" do
+       it "returns http success" do
+         sign_in my_user
+         my_user.role = :admin
+         get :edit, {id: wiki.id}
+         expect(response).to have_http_status(:success)
+       end
+
+       it "renders the #edit view" do
+         sign_in my_user
+         my_user.role = :admin
+         get :edit, {id: wiki.id}
+         expect(response).to render_template :edit
+       end
+
+       it "assigns wiki to be updated to @wiki" do
+         sign_in my_user
+        my_user.role = :admin
+         get :edit, {id: wiki.id}
+
+         wiki_instance = assigns(:wiki)
+
+         expect(wiki_instance.id).to eq wiki.id
+         expect(wiki_instance.title).to eq wiki.title
+         expect(wiki_instance.body).to eq wiki.body
+       end
+     end
+
+     describe "PUT update" do
+          it "updates wiki with expected attributes" do
+            sign_in my_user
+            my_user.role = :admin
+            new_title = RandomData.random_sentence
+            new_body = RandomData.random_paragraph
+
+            put :update, id: wiki.id, wiki: {title: new_title, body: new_body}
+
+            updated_wiki = assigns(:wiki)
+            expect(updated_wiki.id).to eq wiki.id
+            expect(updated_wiki.title).to eq new_title
+            expect(updated_wiki.body).to eq new_body
+          end
+
+          it "redirects to the updated wiki" do
+            sign_in my_user
+            my_user.role = :admin
+            new_title = RandomData.random_sentence
+            new_body = RandomData.random_paragraph
+
+            put :update, id: wiki.id, wiki: {title: new_title, body: new_body}
+            expect(response).to redirect_to wiki
+          end
+        end
+
+
+
+end
 
 
 
