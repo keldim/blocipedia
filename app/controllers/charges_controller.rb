@@ -1,4 +1,7 @@
 class ChargesController < ActionController::Base
+
+
+
 def create
    # Creates a Stripe Customer object, for associating
    # with the charge
@@ -15,8 +18,11 @@ def create
      currency: 'usd'
    )
 
+
+
+
    flash[:notice] = "Thanks for all the money, #{current_user.email}! Feel free to pay me again."
-   current_user.role = :premium
+   current_user.update_attribute(:role, 1)
    redirect_to wikis_path # or wherever
 
    # Stripe will send back CardErrors, with friendly messages
@@ -27,6 +33,8 @@ def create
      redirect_to new_charge_path
  end
 
+
+
  def new
    @stripe_btn_data = {
      key: "#{ Rails.configuration.stripe[:publishable_key] }",
@@ -34,4 +42,16 @@ def create
      amount: 15_00
    }
  end
+
+def refund
+
+  re = Stripe::Refund.create(
+    charge: "ch_1ArKA7CbuP6iObTiGllddi8k"
+  )
+  flash[:notice] = "Sorry to see you go, #{current_user.email}! Your money is fully refunded."
+ current_user.update_attribute(:role, 0)
+ redirect_to wikis_path
+
+end
+
  end
