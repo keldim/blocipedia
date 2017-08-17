@@ -44,11 +44,7 @@ def create
  end
 
 def refund
-
-  re = Stripe::Refund.create(
-    charge: "ch_1ArKA7CbuP6iObTiGllddi8k"
-  )
-  flash[:notice] = "Sorry to see you go, #{current_user.email}! Your money is fully refunded."
+  flash[:notice] = "Sorry to see you go, #{current_user.email}!"
  current_user.update_attribute(:role, 0)
  redirect_to wikis_path
 
