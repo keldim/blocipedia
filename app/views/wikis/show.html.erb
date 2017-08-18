@@ -1,11 +1,26 @@
-<h1><%= @wiki.title %></h1>
+<div class="row">
+  <div class="col-sm-6">
+    <h1><%= @wiki.title %></h1>
+  </div>
+  <div class="col-sm-6, top">
+    <% if @wiki.private %>
+    <strong>private wiki</strong>
+    <% else %>
+    <strong>public wiki</strong>
+    <% end %>
+  </div>
+</div>
 
- <div class="row">
-   <div class="col-md-8">
-     <p><%= @wiki.body %></p>
-   </div>
-   <div class="col-md-4">
-     <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success' %>
-     <%= link_to "Delete Wiki", @wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'} %>
-   </div>
- </div>
+<div class="row">
+  <div class="col-md-8">
+    <p><%= @wiki.body %></p>
+  </div>
+  <div class="col-md-4">
+    <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success' %>
+    <%= link_to "Delete Wiki", @wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'} %>
+  </div>
+</div>
+
+<div>
+  created by <strong><%= @wiki.user.email %></strong>
+</div>

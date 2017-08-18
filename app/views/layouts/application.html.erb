@@ -13,6 +13,7 @@
     <div class="container">
        <ul class="nav nav-tabs">
          <li><%= link_to "Home", root_path %></li>
+         <li><%= link_to "Wikis", wikis_path %></li>
          <li><%= link_to "About", about_path %></li>
       </ul>
 
@@ -24,7 +25,7 @@
       <% if current_user.role == "standard"%>
       <%= link_to "Upgrade to premium", new_charge_path, :class => 'navbar-link'  %>
       <% elsif current_user.role == "premium" %>
-      <%= link_to "Downgrade to standard", charges_refund_path, method: :post, :class => 'navbar-link', data: { confirm: 'Are you sure you want to downgrade to standard?' }  %>
+      <%= link_to "Downgrade to standard", charges_refund_path, method: :post, :class => 'navbar-link', data: { confirm: 'Are you sure you want to downgrade to standard? Private wikis created by you will become public.' }  %>
 
 
 
