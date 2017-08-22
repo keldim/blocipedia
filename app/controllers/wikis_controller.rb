@@ -40,6 +40,7 @@ class WikisController < ApplicationController
        @wiki.title = params[:wiki][:title]
        @wiki.body = params[:wiki][:body]
 @wiki.private = params[:wiki][:private]
+@wiki.collaborators = params[:wiki][:collaborators]
 
        if @wiki.save
          flash[:notice] = "Wiki was updated."

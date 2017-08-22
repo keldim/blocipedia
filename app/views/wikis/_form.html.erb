@@ -14,6 +14,12 @@
   <%= f.check_box :private %> Private wiki
   <% end %>
 </div>
+
+<div class="form-group">
+  <%= f.label :collaborators %>
+  <%= f.text_field :collaborators, class: 'form-control', placeholder: "Enter any collaborators" %>
+</div>
+
 <% end %>
 
 <div class="form-group">

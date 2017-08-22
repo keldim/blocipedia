@@ -46,9 +46,8 @@ def create
 def refund
   flash[:notice] = "Sorry to see you go, #{current_user.email}!"
  current_user.update_attribute(:role, 0)
-@wikis = Wiki.all
+@wikis = current_user.wikis
  @wikis.each do |wiki|
-   if wiki.user.email == current_user.email
     wiki.update_attribute(:private, false)
   end
   end
