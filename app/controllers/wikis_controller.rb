@@ -17,7 +17,8 @@ class WikisController < ApplicationController
        @wiki.title = params[:wiki][:title]
        @wiki.body = params[:wiki][:body]
        @wiki.private = params[:wiki][:private]
-       @wiki.user = @user
+       @wiki.user_id = @user.id
+       @wiki.users << @user
 
 
 
