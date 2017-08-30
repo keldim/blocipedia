@@ -1,16 +1,31 @@
 <h1>Add/Remove Collaborators</h1>
 
-<ul class="list-group">
-
-  
-<% User.all.each do |user| %>
-<li class="list-group-item">
-  <%= user.email %> -
-  <% if @wiki.users.include?(user) == false %>
-  <%= link_to "Add", wiki_collaborators_path, method: :post, class: 'btn btn-success' %>
-  <% else %>
-  <%= link_to "Remove", wiki_collaborators_path(@wiki), method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to remove this collaborator?'} %>
-  <% end %>
-</li>
+<%= form_for [@wiki, @collaborator] do |f| %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Access</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% User.all.each do |user| %>
+    <tr>
+      <td><%= user.email %></td>
+      <td class="form-group">
+        <% if is_user_collaborator?(user, @collaborators) %>
+          <%= f.label  class: 'checkbox' do %>
+          <%= f.check_box(:users, {:multiple => true, :checked => "checked"}, user.email) %>
+          <% end %>
+        <% else %>
+          <%= f.label  class: 'checkbox' do %>
+          <%= f.check_box(:users, {:multiple => true}, user.email) %>
+          <% end %>
+        <% end %>
+      <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<%= f.submit "Save", class: 'btn btn-success' %>
 <% end %>
-</ul>
